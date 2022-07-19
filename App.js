@@ -1,48 +1,20 @@
-import { StatusBar } from "expo-status-bar";
-import React, { useState, useCallback, useEffect } from "react";
-import { StyleSheet, Text, View } from "react-native";
-import { GiftedChat } from "react-native-gifted-chat";
-import Picard from "./assets/picard.webp";
-import Kirk from "./assets/kirk.webp";
-import db from "./firebase";
-import { collection, getDocs } from "firebase/firestore";
+import React from "react";
+import { StyleSheet } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import ChatScreen from "./screens/ChatScreen";
+import HomeScreen from "./screens/HomeScreen";
 
-export default function App() {
-  const [messages, setMessages] = useState([]);
+const Stack = createStackNavigator();
 
-  useEffect(() => {
-    async function getChat() {
-      console.log("starting get!");
-      const chatsCol = collection(db, "Chats");
-      const chatsDoc = await getDocs(chatsCol);
-      const chatData = chatsDoc.docs.map((doc) => doc.data());
-      console.log("here chatData", chatData);
-      setMessages(chatData[0].messages);
-    }
-
-    getChat();
-  }, []);
-
-  const onSend = useCallback((messages = []) => {
-    setMessages((previousMessages) =>
-      GiftedChat.append(previousMessages, messages)
-    );
-  }, []);
-
+function App() {
   return (
-    <View style={styles.container}>
-      <StatusBar style="auto" />
-      <GiftedChat
-        showUserAvatar={true}
-        renderUsernameOnMessage={true}
-        alwaysShowSend={true}
-        messages={messages}
-        onSend={(messages) => onSend(messages)}
-        user={{
-          _id: "1",
-        }}
-      />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="Chat" component={ChatScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
@@ -50,7 +22,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    // alignItems: "center",
-    justifyContent: "center",
+  },
+  item: {
+    padding: 10,
+    fontSize: 18,
+    height: 44,
   },
 });
+
+export default App;
