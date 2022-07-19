@@ -6,13 +6,13 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from "react-native";
-import db from "./firebase";
+import db from "../firebase";
 
 export default function HomeScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={() => navigation.navigate("Chat")}>
-        <Text style={styles.item}>{item.id}</Text>
+        {/* <Text style={styles.item}>{item.id}</Text> */}
       </TouchableOpacity>
     </View>
   );
