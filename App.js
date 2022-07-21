@@ -1,21 +1,10 @@
 import React from "react";
 import { StyleSheet } from "react-native";
-import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
-import ChatScreen from "./screens/ChatScreen";
-import HomeScreen from "./screens/HomeScreen";
-
-const Stack = createStackNavigator();
+import "./firebase";
+import RootNavigation from "./navigation/Index";
 
 function App() {
-  return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="Chat" component={ChatScreen} />
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
+  return <RootNavigation />;
 }
 
 const styles = StyleSheet.create({
